@@ -3,17 +3,30 @@ const TMDB_API_KEY = 'ef2e1b6c18d1484a485308b9899dadbc';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
 
-// Fetch Popular Movies for Homepage
+// Fetch Popular Movies for Homepage with Error Handling
 async function fetchPopularMovies() {
-    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
-    const data = await response.json();
-    return data.results;
+    try {
+        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch popular movies: ' + response.statusText);
+        }
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error('Error fetching popular movies:', error);
+        return []; // Return empty array in case of error
+    }
 }
 
 // Render Movies on Homepage
 async function renderMovies() {
     const movies = await fetchPopularMovies();
     const movieGrid = document.getElementById('movies');
+
+    if (movies.length === 0) {
+        movieGrid.innerHTML = '<p>Unable to fetch movies. Please try again later.</p>';
+        return;
+    }
 
     movies.forEach(movie => {
         const movieCard = document.createElement('div');
@@ -31,15 +44,29 @@ async function renderMovies() {
 
 // Fetch Movie Details by ID (Used in details.html)
 async function fetchMovieDetails(movieId) {
-    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
-    return await response.json();
+    try {
+        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch movie details: ' + response.statusText);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+    }
 }
 
 // Fetch Similar Movies (Used in details.html)
 async function fetchSimilarMovies(movieId) {
-    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`);
-    const data = await response.json();
-    return data.results;
+    try {
+        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch similar movies: ' + response.statusText);
+        }
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error('Error fetching similar movies:', error);
+    }
 }
 
 // Initialize Video Player with Vidsrc API (Replace with actual API)
