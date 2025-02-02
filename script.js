@@ -1,15 +1,15 @@
-// TMDb API Configuration
-const TMDB_API_KEY = 'ef2e1b6c18d1484a485308b9899dadbc';
-const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-
 // Fetch Popular Movies for Homepage with Error Handling
 async function fetchPopularMovies() {
     try {
-        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
+        // Make a request to the Netlify function
+        const response = await fetch('/.netlify/functions/fetchMovies');
+        
+        // Check if the response is OK
         if (!response.ok) {
             throw new Error('Failed to fetch popular movies: ' + response.statusText);
         }
+
+        // Parse the response data
         const data = await response.json();
         return data.results;
     } catch (error) {
@@ -23,11 +23,13 @@ async function renderMovies() {
     const movies = await fetchPopularMovies();
     const movieGrid = document.getElementById('movies');
 
+    // Check if there are no movies
     if (movies.length === 0) {
         movieGrid.innerHTML = '<p>Unable to fetch movies. Please try again later.</p>';
         return;
     }
 
+    // Display each movie
     movies.forEach(movie => {
         const movieCard = document.createElement('div');
         movieCard.className = 'movie-card';
@@ -45,7 +47,7 @@ async function renderMovies() {
 // Fetch Movie Details by ID (Used in details.html)
 async function fetchMovieDetails(movieId) {
     try {
-        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
+        const response = await fetch(`/movie/${movieId}`); // Update with your backend if needed
         if (!response.ok) {
             throw new Error('Failed to fetch movie details: ' + response.statusText);
         }
@@ -58,7 +60,7 @@ async function fetchMovieDetails(movieId) {
 // Fetch Similar Movies (Used in details.html)
 async function fetchSimilarMovies(movieId) {
     try {
-        const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`);
+        const response = await fetch(`/movie/${movieId}/similar`); // Update with your backend if needed
         if (!response.ok) {
             throw new Error('Failed to fetch similar movies: ' + response.statusText);
         }
