@@ -1,12 +1,11 @@
-// Shared JavaScript (Homepage + Details Page)
-
 // TMDb API Configuration
 const TMDB_API_KEY = 'ef2e1b6c18d1484a485308b9899dadbc';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
 
 // Fetch Popular Movies for Homepage
 async function fetchPopularMovies() {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
+    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
     const data = await response.json();
     return data.results;
 }
@@ -32,13 +31,13 @@ async function renderMovies() {
 
 // Fetch Movie Details by ID (Used in details.html)
 async function fetchMovieDetails(movieId) {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
+    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
     return await response.json();
 }
 
 // Fetch Similar Movies (Used in details.html)
 async function fetchSimilarMovies(movieId) {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`);
+    const response = await fetch(`${CORS_PROXY}${TMDB_BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`);
     const data = await response.json();
     return data.results;
 }
