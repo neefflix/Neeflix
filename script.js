@@ -1,7 +1,7 @@
 // Shared JavaScript (Homepage + Details Page)
 
 // TMDb API Configuration
-const TMDB_API_KEY = 'YOUR_TMDB_API_KEY';
+const TMDB_API_KEY = 'ef2e1b6c18d1484a485308b9899dadbc';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 // Fetch Popular Movies for Homepage
