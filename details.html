@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">MovieFlix</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Movies</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Video Player -->
+        <div class="video-container">
+            <video id="movie-player" class="video-js" controls preload="auto"></video>
+        </div>
+
+        <!-- Movie Details -->
+        <div class="movie-details">
+            <img id="movie-poster" src="" alt="Movie Poster">
+            <div class="details">
+                <h1 id="movie-title"></h1>
+                <p id="movie-overview"></p>
+                <p id="movie-rating"></p>
+            </div>
+        </div>
+
+        <!-- Similar Movies Slider -->
+        <section class="similar-movies">
+            <h2>Similar Movies</h2>
+            <div class="slider" id="similar-slider"></div>
+        </section>
+    </main>
+
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
